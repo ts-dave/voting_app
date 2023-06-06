@@ -1,2 +1,2 @@
 # voting_app
- Online Voting app with django and bootstrap
+ Simple online voting app, built with django and bootstrap
