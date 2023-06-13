@@ -1,0 +1,35 @@
+.mybutton {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+}
+
+.offcanvas, .offcanvas-lg, .offcanvas-md, .offcanvas-sm, .offcanvas-xl, .offcanvas-xxl {
+  --bs-offcanvas-width: 350px;
+}
+
+.container {
+  padding: 15px;
+  margin: 0 auto;
+  max-width: 100%;
+  width: 900px;
+}
+
+a {
+  color: var(--bs-link-color);
+  text-decoration: none;
+}
+
+.text-bg-primary.category_link {
+  color: #ecf0f1!important;
+}
+
+.text-bg-primary.category_link:hover {
+  transition: all 0.5s;
+}
+
+.text-bg-primary.category_link:hover, .text-bg-primary.category_link.active {
+  color: #2c3e50 !important;
+  background-color: #ecf0f1 !important;
+}
+

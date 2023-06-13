@@ -1,0 +1,112 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Voting app</title>
+    <meta name="twitter:description" content="Online voting system created with Django and Bootstrap">
+    <meta name="twitter:image" content="{% static 'images/220113-G-WC787-004.webp' %}">
+    <meta property="og:type" content="website">
+    <meta name="description" content="Online votin Application">
+    <meta property="og:image" content="{% static 'images/220113-G-WC787-004.webp' %}">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Voting app">
+    <link rel="stylesheet" href="{% static 'bootstrap/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400&amp;display=swap">
+    <link rel="stylesheet" href="{% static 'animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/Login-Form-Basic-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'css/untitled.css' %}">
+</head>
+
+<body style="font-family: Lato, sans-serif;">
+    <div class="container pt-2 pt-md-4">
+       
+       {% block sidebar %}
+         <!-- SIDEBAR -->
+        <aside><a class="btn btn-primary fw-bolder text-center bounce animated mybutton" role="button" data-bs-toggle="offcanvas" href="#offcanvasExample" aria-controls="offcanvasExample"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-bar-right fs-5 text-center" style="--bs-warning: #f39c12;--bs-warning-rgb: 243,156,18;">
+                    <path fill-rule="evenodd" d="M6 8a.5.5 0 0 0 .5.5h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L12.293 7.5H6.5A.5.5 0 0 0 6 8zm-2.5 7a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5z"></path>
+                </svg></a>
+            <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel"><a class="btn btn-primary fw-bolder text-center mybutton" role="button" data-bs-toggle="offcanvas" href="#offcanvasExample" aria-controls="offcanvasExample"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-bar-left fs-5 text-center" style="font-size: 11px;">
+                        <path fill-rule="evenodd" d="M12.5 15a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5zM10 8a.5.5 0 0 1-.5.5H3.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L3.707 7.5H9.5a.5.5 0 0 1 .5.5z"></path>
+                    </svg></a>
+                <div class="offcanvas-header d-flex d-lg-flex justify-content-center align-items-center mb-0">
+                    <h5 id="offcanvasExampleLabel" class="offcanvas-title mt-2"><img class="img-fluid" src="{% static 'images/220113-G-WC787-004.webp' %}" width="100" height="100"></h5>
+                </div>
+                <h5 class="fw-normal text-center mb-3 mb-md-5">Online Voting App</h5>
+                <hr class="mb-0">
+                <div class="offcanvas-body p-0">
+                    <a href="{% url 'polls:category' 'President' %}">
+                        <p class="lead text-start text-light text-bg-primary border rounded-0 border-secondary p-3 mb-0 border-start-0 border-end-0 category_link "><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-people">
+                                <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"></path>
+                            </svg>&nbsp;President&nbsp;
+                            <span class="badge bg-success fw-light {% if not voted %}invisible{% endif %}">Voted</span></p>   
+                    </a>
+                    <a href="{% url 'polls:category' 'Vice' %}">
+                        <p class="lead text-start text-light text-bg-primary border rounded-0 border-secondary p-3 mb-0 border-start-0 border-end-0 category_link "><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-people">
+                                <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"></path>
+                            </svg>&nbsp;Vice President&nbsp;
+                            <span class="badge bg-success fw-light {% if not voted %}invisible{% endif %}">Voted</span></p>   
+                    </a>
+                    <a href="{% url 'polls:category' 'Secretary' %}">
+                        <p class="lead text-start text-light text-bg-primary border rounded-0 border-secondary p-3 mb-0 border-start-0 border-end-0 category_link "><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-people">
+                                <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"></path>
+                            </svg>&nbsp;Secretary&nbsp;
+                            <span class="badge bg-success fw-light {% if not voted %}invisible{% endif %}">Voted</span></p>   
+                    </a>
+                    <a href="{% url 'polls:category' 'Treasurer' %}">
+                        <p class="lead text-start text-light text-bg-primary border rounded-0 border-secondary p-3 mb-0 border-start-0 border-end-0 category_link "><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-people">
+                                <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"></path>
+                            </svg>&nbsp;Treasurer&nbsp;
+                            <span class="badge bg-success fw-light {% if not voted %}invisible{% endif %}">Voted</span></p>   
+                    </a>
+                    <a href="{% url 'polls:category' 'WOCOM' %}">
+                        <p class="lead text-start text-light text-bg-primary border rounded-0 border-secondary p-3 mb-0 border-start-0 border-end-0 category_link "><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-people">
+                                <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"></path>
+                            </svg>&nbsp;WOCOM&nbsp;
+                            <span class="badge bg-success fw-light {% if not voted %}invisible{% endif %}">Voted</span></p>   
+                    </a>
+
+                    
+
+                    
+                    {% if user.is_authenticated %}
+                    <a class="btn btn-danger fs-5 fw-semibold text-center border rounded-0 d-block mt-4 py-3" role="button" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-lock-fill">
+                            <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"></path>
+                        </svg>&nbsp;Logout
+                    </a>
+                    {% else %}
+                    <a class="btn btn-success fs-5 fw-semibold text-center border rounded-0 d-block mt-4 py-3" role="button" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-unlock-fill">
+                            <path d="M11 1a2 2 0 0 0-2 2v4a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h5V3a3 3 0 0 1 6 0v4a.5.5 0 0 1-1 0V3a2 2 0 0 0-2-2z"></path>
+                        </svg>&nbsp;Login
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </aside>
+        {% endblock sidebar %}
+
+        {% block header %}
+        <header class="text-center text-primary bg-light p-5"><img class="rounded img-fluid mb-4" src="{% static 'images/220113-G-WC787-004.webp' %}" width="200" height="200">
+            <h1 class="fw-semibold text-primary bg-light mb-3">Voting Portal</h1>
+            <div><span class="badge bg-success fs-6 text-center mb-1">Voting Underway</span></div>
+            <p class="text-danger">00 hrs : 00 mins left.</p>
+        </header><!-- Start: main-body -->
+        {% endblock header %}
+
+        
+        {% block main-body %}
+            
+        <section class="pt-3">
+            <div class="text-center d-md-flex flex-column justify-content-md-center align-items-md-center">
+                <div class="alert alert-light fs-5 fw-normal text-start text-primary border rounded-0 border-4 border-primary border-end-0 border-top-0 border-bottom-0" role="alert"><span class="fw-normal"><strong>Click on the button at the top left corner to select category and vote!</strong>&nbsp;</span></div>
+            </div>
+        </section><!-- End: main-body -->
+        {% endblock main-body %}
+    </div>
+    <script src="{% static 'bootstrap/bootstrap.min.js' %}"></script>
+    <script src="{% static '/js/bs-init.js' %}"></script>
+</body>
+
+</html>
