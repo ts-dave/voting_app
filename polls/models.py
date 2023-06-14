@@ -13,10 +13,10 @@ class Category(models.Model):
 
 
 class Candidate(models.Model):
-    Category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     name = models.CharField(max_length=120)
     image = models.ImageField(upload_to='static/images')
-    num_of_votes = models.IntegerField(editable=False, blank=True, null=True)
+    num_of_votes = models.IntegerField(default=0)
 
     def __str__(self):
         return self.name
