@@ -1,5 +1,6 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from django.contrib.auth import get_user_model
+from django.http import JsonResponse
 from django.db.models import F
 from django.views import View
 
@@ -53,3 +54,15 @@ class ResultView(View):
             'category': category,
         }
         return render(request, 'results.html', context)
+
+
+class ModalView(View):
+    def get(self, request, pk):
+        candidate = get_object_or_404(Candidate, pk=pk)
+        link = f'/vote/{candidate.pk}'
+        data = {
+            'name': candidate.name,
+            'image': candidate.image.url,
+            'link': link,
+        }
+        return JsonResponse(data)

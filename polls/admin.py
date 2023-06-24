@@ -13,4 +13,4 @@ class CategoryAdmin(admin.ModelAdmin):
 @admin.register(Candidate)
 class CandidateAdmin(admin.ModelAdmin):
     list_display = ['name', 'num_of_votes']
-    readonly_fields = ('num_of_votes',)
+    # readonly_fields = ('num_of_votes',)

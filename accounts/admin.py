@@ -3,4 +3,5 @@ from .models import CustomUser
 
 @admin.register(CustomUser)
 class CustomUserAdmin(admin.ModelAdmin):
-    list_display = ['username', 'voted']
+    list_display = ['username', 'is_active', 'voted']
+    # readonly_fields = ('voted',)
