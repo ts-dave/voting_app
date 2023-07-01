@@ -1,16 +1,16 @@
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
 from django.http import JsonResponse
 from django.db.models import F
 from django.views import View
-
 from .models import Category, Candidate
 
-class HomeView(View):
+class HomeView(LoginRequiredMixin, View):
     def get(self, request):
         return render(request, 'index.html')
 
-class CategoryView(View):
+class CategoryView(LoginRequiredMixin, View):
     def get(self, request, category):
         user = get_user_model().objects.get(username=request.user.username)
         if category in user.voted.split():
@@ -27,7 +27,7 @@ class CategoryView(View):
         }
         return render(request, 'vote.html', context)
 
-class VoteView(View):
+class VoteView(LoginRequiredMixin, View):
     def get(self, request, pk):
         user = get_user_model().objects.get(username=request.user.username)
         candidate = get_object_or_404(Candidate, pk=pk)
@@ -43,7 +43,7 @@ class VoteView(View):
             user.save()
         return redirect('polls:result', category=category)
 
-class ResultView(View):
+class ResultView(LoginRequiredMixin, View):
     def get(self, request, category):
         if category == 'Vice':
             category = 'Vice President'
@@ -56,7 +56,7 @@ class ResultView(View):
         return render(request, 'results.html', context)
 
 
-class ModalView(View):
+class ModalView(LoginRequiredMixin, View):
     def get(self, request, pk):
         candidate = get_object_or_404(Candidate, pk=pk)
         link = f'/vote/{candidate.pk}'
