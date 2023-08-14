@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-&&u7(nnw_&#+&^6q$^)qfa$782mq3it#srukd!b85f2_(-vpp8
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -34,6 +34,8 @@ INSTALLED_APPS = [
     # myapps
     'accounts.apps.AccountsConfig',
     'polls.apps.PollsConfig',
+    # 3rd party apps
+    'grappelli',
     # system apps
     'django.contrib.admin',
     'django.contrib.auth',
@@ -129,7 +131,11 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
+# AUTHENTICATION SETTINGS
 AUTH_USER_MODEL = 'accounts.CustomUser'
 LOGIN_URL = 'accounts:login'
 LOGIN_REDIRECT_URL = 'polls:home'
+
+# GRAPPELLI SETTINGS
+GRAPPELLI_ADMIN_TITLE = "ONLINE VOTING APP"
+GRAPPELLI_SWITCH_USER = True
