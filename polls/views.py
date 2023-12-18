@@ -1,10 +1,11 @@
-from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
+from django.contrib import messages
 from django.http import JsonResponse
 from django.db.models import F
 from django.views import View
-from .models import Category, Candidate
+from .models import Category, Candidate, Vote
 
 
 class HomeView(LoginRequiredMixin, View):
@@ -13,15 +14,17 @@ class HomeView(LoginRequiredMixin, View):
 
 
 class CategoryView(LoginRequiredMixin, View):
-    def get(self, request, category):
-        user = get_user_model().objects.get(username=request.user.username)
-        if category in user.voted.split():
-            return redirect("polls:result", category=category)
 
+    def get(self, request, category):
         if category == "Vice":
             category = "Vice President"
+
         user = get_user_model().objects.get(username=request.user.username)
         category = Category.objects.get(category_name=category)
+
+        if Vote.objects.filter(voter=user, category=category).first():
+            return redirect("polls:result", category=category)
+
         candidates = category.candidate_set.all()
         context = {
             "candidates": candidates,
@@ -32,31 +35,28 @@ class CategoryView(LoginRequiredMixin, View):
 
 class VoteView(LoginRequiredMixin, View):
     def get(self, request, pk):
+
         user = get_user_model().objects.get(username=request.user.username)
         candidate = get_object_or_404(Candidate, pk=pk)
 
-        if candidate.category in user.voted.split():
+        if Vote.objects.filter(voter=user, category=candidate.category).first():
+            messages.error(request, "You have already voted for this category! You can't vote twice")
             return redirect("polls:result", category=candidate.category)
 
         candidate.num_of_votes = F("num_of_votes") + 1
         candidate.save()
         candidate.refresh_from_db()
-
-        if candidate.category.category_name == "Vice President":
-            user.voted = user.voted + " " + "Vice"
-            user.save()
-        else:
-            user.voted = user.voted + " " + candidate.category.category_name
-            user.save()
+        Vote.objects.create(voter=user, category=candidate.category)
+        messages.success(request, "You have successfuly voted for this category!")
         return redirect("polls:result", category=candidate.category)
-
-    # TODO: Fix voter pressing back in browser to vote again.
 
 
 class ResultView(LoginRequiredMixin, View):
     def get(self, request, category):
+
         if category == "Vice":
             category = "Vice President"
+
         category = Category.objects.get(category_name=category)
         candidates = category.candidate_set.all()
         context = {
@@ -69,6 +69,7 @@ class ResultView(LoginRequiredMixin, View):
 class ModalView(LoginRequiredMixin, View):
     def get(self, request, pk):
         candidate = get_object_or_404(Candidate, pk=pk)
+
         link = f"/vote/{candidate.pk}"
         data = {
             "name": candidate.name,

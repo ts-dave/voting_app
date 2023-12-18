@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+from django.contrib import messages
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -34,8 +35,6 @@ INSTALLED_APPS = [
     # myapps
     'accounts.apps.AccountsConfig',
     'polls.apps.PollsConfig',
-    # 3rd party apps
-    'grappelli',
     # system apps
     'django.contrib.admin',
     'django.contrib.auth',
@@ -136,6 +135,7 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 LOGIN_URL = 'accounts:login'
 LOGIN_REDIRECT_URL = 'polls:home'
 
-# GRAPPELLI SETTINGS
-GRAPPELLI_ADMIN_TITLE = "ONLINE VOTING APP"
-GRAPPELLI_SWITCH_USER = True
+# Override default message tags
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger'
+}
